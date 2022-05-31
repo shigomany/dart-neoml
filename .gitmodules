@@ -1,3 +1,6 @@
 [submodule "neoml"]
 	path = neoml
 	url = https://github.com/shigomany/neoml_adapt_c.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg

@@ -4,9 +4,18 @@
 pubspec.lock
 
 # Conventional directory for build output.
-build/
+assets/
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+
+# Compiled binaries
+*.exe
+*.app
+*.dmg
+
+# Compiled Dynamic libraries
+*.o
+*.lib
