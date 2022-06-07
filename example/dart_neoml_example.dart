@@ -1,7 +1,9 @@
-import 'package:dart_neoml/src/neoml/random/random.dart';
+import 'package:dart_neoml/src/neoml/float_vector/float_vector.dart';
 
-Future<void> main() async {
-  final random = Random.timebased();
+void main() {
+  // final rnd = Random();
+  final vector = FloatVector.fromList([1, 2, 3]);
+  final sparseVector = vector.sparseVector;
 
-  print(random.normal(mean: 0, sigma: 10));
+  print(sparseVector.numberOfElements);
 }

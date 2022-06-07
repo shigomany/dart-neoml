@@ -5,7 +5,7 @@ Future<void> main() => Pipeline(
       steps: [
         VcpkgBuilder(),
         CheckDepndencies(),
-        CMakeStepConfigure(),
+        CMakeConfigure(),
         BuildLibrary(),
         CleanUp(),
       ],

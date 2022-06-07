@@ -3,6 +3,11 @@
 /// More dartdocs go here.
 library dart_neoml;
 
-export 'src/dart_neoml_base.dart';
+// Common
+export 'src/common/extensions.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+// Functions
+export 'src/functions/functions.dart';
+
+// Libraries
+export 'src/neoml/neoml.dart';

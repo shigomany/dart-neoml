@@ -1,7 +1,7 @@
 part of 'random.dart';
 
-/// This class provides name functions in C dynamic library for class `CRandom`
-class CRandomFunctinos {
+// This class provides name functions in C dynamic library for class `CRandom`
+class _CRandomFunctinos {
   static const init = 'CRandomInit';
 
   static const initEmpty = 'CRandomInitEmpty';
@@ -16,5 +16,5 @@ class CRandomFunctinos {
 
   static const normal = 'CRandomNormal';
 
-  const CRandomFunctinos._();
+  const _CRandomFunctinos._();
 }

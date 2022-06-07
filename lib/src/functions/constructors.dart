@@ -12,8 +12,7 @@ typedef EmptyConstructor = ffi.Pointer<ffi.Void> Function();
 /// {@template functions.callback.args}
 /// arguments.
 /// {@endtemplate}
-typedef ConstructorFFI1<T1 extends ffi.NativeType> = ffi.Pointer<ffi.Void>
-    Function(
+typedef ConstructorFFI1<T1 extends ffi.NativeType> = ffi.Pointer<ffi.Void> Function(
   T1 t1,
 );
 
@@ -59,4 +58,26 @@ typedef Constructor3<T1, T2, T3> = ffi.Pointer<ffi.Void> Function(
   T1 t1,
   T2 t2,
   T3 t3,
+);
+
+/// {@macro functions.constructors.fficonsturctor}
+/// 4
+/// {@macro functions.callback.args}
+typedef ConstructorFFI4<T1 extends ffi.NativeType, T2 extends ffi.NativeType,
+        T3 extends ffi.NativeType, T4 extends ffi.NativeType>
+    = ffi.Pointer<ffi.Void> Function(
+  T1 t1,
+  T2 t2,
+  T3 t3,
+  T4 t4,
+);
+
+/// {@macro functions.callback.dartconsturctor}
+/// 4
+/// {@macro functions.callback.args}
+typedef Constructor4<T1, T2, T3, T4> = ffi.Pointer<ffi.Void> Function(
+  T1 t1,
+  T2 t2,
+  T3 t3,
+  T4 t4,
 );

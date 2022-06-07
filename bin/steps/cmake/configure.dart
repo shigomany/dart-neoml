@@ -2,7 +2,7 @@ part of '../steps.dart';
 
 final RegExp _visualStudioVersion = RegExp(r'^Visual Studio (\d{1,})');
 
-class CMakeStepConfigure extends StepDefinitionExecutor {
+class CMakeConfigure extends StepDefinitionExecutor {
   @override
   String get module => 'CMake';
 
@@ -34,8 +34,7 @@ class CMakeStepConfigure extends StepDefinitionExecutor {
     // Execute command
     await executeCommand(
       command: command,
-      rightPrompt: (done) =>
-          done ? message('Project configured') : message('Configuring project'),
+      rightPrompt: (done) => done ? message('Project configured') : message('Configuring project'),
       workingDirectory: 'neoml/Build',
     );
   }
@@ -50,12 +49,10 @@ class CMakeStepConfigure extends StepDefinitionExecutor {
     final projectGeneratorsSelectors = Select(
       prompt: message('Project generator:'),
       options: filteredGenerators.map((e) => e.shortNameIDE).toList(),
-      initialIndex:
-          filteredGenerators.indexWhere((element) => element.isSelected),
+      initialIndex: filteredGenerators.indexWhere((element) => element.isSelected),
     );
 
-    final selectedGenerator =
-        filteredGenerators[projectGeneratorsSelectors.interact()];
+    final selectedGenerator = filteredGenerators[projectGeneratorsSelectors.interact()];
 
     return selectedGenerator;
   }

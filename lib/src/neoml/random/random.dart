@@ -1,35 +1,37 @@
 import 'dart:ffi' as ffi;
-import 'package:dart_neoml/src/functions/functions.dart';
-import 'package:dart_neoml/src/libraries/libraries.dart';
+
+import '../../functions/functions.dart';
+import '../../libraries/libraries.dart';
 
 part 'functions.dart';
 
-/// {@template neoml.random.Random}
+/// {@template neoml.Random}
 /// The class to generate random values
 ///
 /// It uses the complementary-multiply-with-carry algorithm
 ///
 /// C lag-1024, multiplier(a) = 108798, initial carry(c) = 12345678
 /// {@endtemplate}
+/// {@category neoml}
 class Random {
   final Instance _instance;
 
-  /// {@macro neoml.random.Random}
+  /// {@template neoml.Random.constructor}
+  /// Creates Random instance with start [seed] =
+  /// {@endtemplate}
+  /// `195948557`
   Random({
     int seed = 195948557,
   }) : _instance = _initSeed(seed);
 
-  /// {@macro neoml.random.Random}
-  ///
-  /// The default value is taken from [DateTime.now]
-  Random.timebased()
-      : _instance =
-            _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
+  /// {@macro neoml.Random.constructor}
+  /// DateTime.now().microsecondsSinceEpoch
+  Random.timebased() : _instance = _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
 
   static ffi.Pointer<ffi.Void> _initSeed(int seed) {
     final constructor = Libraries.instance.neoML
         .lookupFunction<ConstructorFFI1<ffi.UnsignedInt>, Constructor1<int>>(
-      CRandomFunctinos.init,
+      _CRandomFunctinos.init,
     );
 
     return constructor(seed);
@@ -37,8 +39,8 @@ class Random {
 
   /// Resets to the starting state
   void reset(int seed) => Libraries.instance.neoML.lookupFunction<
-      CallbackFFI1<ffi.UnsignedInt, ffi.Void>,
-      Callback1<int, void>>(CRandomFunctinos.reset)(_instance, seed);
+      NativeClassCallbackFn1<ffi.UnsignedInt, ffi.Void>,
+      ClassCallbackFn1<int, void>>(_CRandomFunctinos.reset)(_instance, seed);
 
   /// Returns a double value from a uniform distribution in ([min], [max]) range.
   /// ([min] is not included in the half - interval segment)
@@ -49,8 +51,8 @@ class Random {
     required double max,
   }) =>
       Libraries.instance.neoML.lookupFunction<
-          CallbackFFI2<ffi.Double, ffi.Double, ffi.Double>,
-          Callback2<double, double, double>>(CRandomFunctinos.uniform)(
+          NativeClassCallbackFn2<ffi.Double, ffi.Double, ffi.Double>,
+          ClassCallbackFn2<double, double, double>>(_CRandomFunctinos.uniform)(
         _instance,
         min,
         max,
@@ -66,8 +68,8 @@ class Random {
     required int max,
   }) =>
       Libraries.instance.neoML.lookupFunction<
-          CallbackFFI2<ffi.Int32, ffi.Int32, ffi.Int32>,
-          Callback2<int, int, int>>(CRandomFunctinos.uniformInt)(
+          NativeClassCallbackFn2<ffi.Int32, ffi.Int32, ffi.Int32>,
+          ClassCallbackFn2<int, int, int>>(_CRandomFunctinos.uniformInt)(
         _instance,
         min,
         max,
@@ -79,8 +81,8 @@ class Random {
     required double sigma,
   }) =>
       Libraries.instance.neoML.lookupFunction<
-          CallbackFFI2<ffi.Double, ffi.Double, ffi.Double>,
-          Callback2<double, double, double>>(CRandomFunctinos.normal)(
+          NativeClassCallbackFn2<ffi.Double, ffi.Double, ffi.Double>,
+          ClassCallbackFn2<double, double, double>>(_CRandomFunctinos.normal)(
         _instance,
         mean,
         sigma,

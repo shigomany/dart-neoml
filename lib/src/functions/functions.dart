@@ -1,5 +1,7 @@
 import 'dart:ffi' as ffi;
 
-part 'callbacks.dart';
+part 'class_callbacks.dart';
 part 'constructors.dart';
 part 'instance.dart';
+part 'structs.dart';
+part 'callbacks.dart';
