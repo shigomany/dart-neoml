@@ -3,6 +3,7 @@
 .packages
 pubspec.lock
 .vscode/
+doc/**
 
 # Conventional directory for build output.
 assets/
