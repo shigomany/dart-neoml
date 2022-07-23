@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:dart_neoml/dart_neoml.dart';
 import 'package:dart_neoml/src/common/base.dart';
+import 'package:dart_neoml/src/neoml/float_vector_desc/float_vector_desc.dart';
 import 'package:meta/meta.dart';
 
 import '../../libraries/libraries.dart';
@@ -11,7 +12,7 @@ part 'native_float_vector.dart';
 
 /// {@macro neoml.FloatVector}
 /// {@category neoml}
-class FloatVector with _NativeFloatVector implements ClassInstance {
+class FloatVector with _NativeFloatVector implements IFloatVector {
   /// {@template neoml.FloatVector}
   /// Creates a vector of size length from the given sparse vector.
   ///
@@ -32,7 +33,11 @@ class FloatVector with _NativeFloatVector implements ClassInstance {
     required FloatVectorDesc desc,
   }) : _instance = _NativeFloatVector._fromVectorDesc(size, desc);
 
-  FloatVector.fromList(Iterable<double> values) : _instance = _NativeFloatVector._fromList(values);
+  FloatVector.fromList(Iterable<double> values)
+      : _instance = _NativeFloatVector._fromList(values);
+
+  @internal
+  FloatVector.fromInstance(Instance instance) : _instance = instance;
 
   final Instance _instance;
 
@@ -52,9 +57,11 @@ class FloatVector with _NativeFloatVector implements ClassInstance {
 
   double operator [](int index) => _getValue(_instance, index);
 
-  void operator []=(int index, double value) => _setValue(_instance, index, value);
+  void operator []=(int index, double value) =>
+      _setValue(_instance, index, value);
 
-  List<double> get sourceValues => _getPtr(_instance).asTypedList(size).toList();
+  List<double> get sourceValues =>
+      _getPtr(_instance).asTypedList(size).toList();
 
   void nullify() => _nullify(_instance);
 
@@ -62,5 +69,12 @@ class FloatVector with _NativeFloatVector implements ClassInstance {
   FloatVectorDesc get desc => _desc(_instance);
 
   @experimental
-  SparseFloatVector get sparseVector => SparseFloatVector.fromPointer(_sparseVector(_instance));
+  SparseFloatVector get sparseVector =>
+      SparseFloatVector.fromInstance(_sparseVector(_instance));
+
+  @override
+  String toString() {
+    return 'FloatVector(size: $size, norm: $norm, normL1: $normL1, '
+        'isNull: $isNull, maxAbs: $maxAbs)';
+  }
 }

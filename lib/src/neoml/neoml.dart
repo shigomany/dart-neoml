@@ -1,6 +1,10 @@
 export 'random/random.dart';
-export 'archive_file/archive_file.dart';
+// export 'archive_file/archive_file.dart';
 export 'sparse_float_matrix/sparse_float_matrix.dart';
 export 'sparse_float_vector/sparse_float_vector.dart';
 export 'memory_problem/memory_problem.dart';
 export 'sigmoid/sigmoid.dart';
+export 'float_vector/float_vector.dart';
+export 'classification_probability/classification_probability.dart';
+export 'classification_result/classification_result.dart';
+export 'linear_classifier/linear_classifier.dart';

@@ -1,9 +1,11 @@
-import 'package:dart_neoml/src/neoml/float_vector/float_vector.dart';
+import 'package:dart_neoml/dart_neoml.dart';
 
-void main() {
+Future<void> main() async {
+  final sigmoid = Sigmoid.init();
+  print(sigmoid);
+  // SIGMOID в C++ передается хуево
+  final cls = LinearClassifier();
+  // print(ss2.sigmoid);
+  // print(ss.desc);
   // final rnd = Random();
-  final vector = FloatVector.fromList([1, 2, 3]);
-  final sparseVector = vector.sparseVector;
-
-  print(sparseVector.numberOfElements);
 }

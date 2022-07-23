@@ -2,9 +2,13 @@ part of 'memory_problem.dart';
 
 // This class provides name functions in C dynamic library for class `CMemoryProblem`
 class _CMemoryProblemFunctions {
+  // -- Constructors -- //
+
   static const init = 'CMemoryProblemInit';
 
-  static const initEmpty = 'CMemoryProblemInitEmpty';
+  // -- Constructors -- //
+
+  // -- Functions -- //
 
   static const addFloatDesc = 'CMemoryProblemAddFloatDesc';
 
@@ -37,6 +41,8 @@ class _CMemoryProblemFunctions {
   static const getDiscretizationValue = 'CMemoryProblemGetDiscretizationValue';
 
   static const getBinaryClass = 'CMemoryProblemGetBinaryClass';
+
+  // -- Functions -- //
 
   const _CMemoryProblemFunctions._();
 }

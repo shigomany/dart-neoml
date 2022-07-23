@@ -28,8 +28,6 @@ class _CFloatVectorFunctions {
 
   static const setValue = 'CFloatVectorSetValue';
 
-  static const copyOnWrite = 'CFloatVectorCopyOnWrite';
-
   static const getDesc = 'CFloatVectorGetDesc';
 
   static const nullify = 'CFloatVectorNullify';

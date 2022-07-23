@@ -1,6 +1,10 @@
-// ignore_for_file: non_constant_identifier_names
+import 'dart:ffi' as ffi;
+import 'package:collection/collection.dart';
+import 'package:dart_neoml/src/common/extensions.dart';
+import 'package:dart_neoml/src/functions/functions.dart';
+import 'package:dart_neoml/src/libraries/libraries.dart';
 
-part of 'sparse_float_vector.dart';
+part 'functions.dart';
 
 /// A vector descriptor
 ///
@@ -15,10 +19,10 @@ class FloatVectorDesc extends ffi.Struct {
   external ffi.Pointer<ffi.Float> _values;
 
   /// Indexes of vector
-  List<int> get indexes => _indexes.asTypedList(size);
+  List<int> get indexes => _indexes.asTypedList(size).toList();
 
   /// Values of vector
-  List<double> get values => _values.asTypedList(size);
+  List<double> get values => _values.asTypedList(size).toList();
 
   static FloatVectorDesc init({
     required int size,
@@ -53,18 +57,18 @@ class FloatVectorDesc extends ffi.Struct {
   static FloatVectorDesc get empty =>
       _createStructFn(0, <int>[].toPointerInt32(), <double>[].toPointerFloat());
 
-  static DartStructFn3<int, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>, FloatVectorDesc>
-      get _createStructFn => Libraries.instance.neoML.lookupFunction<
-              NativeStructFn3<ffi.Int32, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>,
-                  FloatVectorDesc>,
-              DartStructFn3<int, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>, FloatVectorDesc>>(
-            _CFloatVectorDescFunctinos.init,
-          );
+  static DartStructFn3<int, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>,
+      FloatVectorDesc> get _createStructFn => Libraries.instance.neoML
+          .lookupFunction<
+              NativeStructFn3<ffi.Int32, ffi.Pointer<ffi.Int32>,
+                  ffi.Pointer<ffi.Float>, FloatVectorDesc>,
+              DartStructFn3<int, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>,
+                  FloatVectorDesc>>(
+        _CFloatVectorDescFunctinos.init,
+      );
 
   @override
-  String toString() {
-    return 'FloatVectorDesc(size: $size, indexes: $indexes, values: $values)';
-  }
+  String toString() => values.toString();
 
   @override
   int get hashCode =>

@@ -2,11 +2,23 @@
 
 part of 'sparse_float_matrix.dart';
 
-typedef _NativeConstructor = NativeStructFn6<ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int32>,
-    ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>, FloatMatrixDesc>;
+typedef _NativeConstructor = NativeStructFn6<
+    ffi.Int32,
+    ffi.Int32,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Pointer<ffi.Float>,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Pointer<ffi.Int32>,
+    FloatMatrixDesc>;
 
-typedef _DartConstructor = DartStructFn6<int, int, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Float>,
-    ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>, FloatMatrixDesc>;
+typedef _DartConstructor = DartStructFn6<
+    int,
+    int,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Pointer<ffi.Float>,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Pointer<ffi.Int32>,
+    FloatMatrixDesc>;
 
 typedef _NativeGetRow = FloatVectorDesc Function(FloatMatrixDesc, ffi.Int32);
 typedef _DartGetRow = FloatVectorDesc Function(FloatMatrixDesc, int);
@@ -39,8 +51,10 @@ class FloatMatrixDesc extends ffi.Struct {
   List<int> get columns => _columns.asTypedList(values.length).toList();
 
   /// Values of vector
-  List<double> get values =>
-      _values.asTypedList(height * width).where((element) => element > 0).toList();
+  List<double> get values => _values
+      .asTypedList(height * width)
+      .where((element) => element > 0)
+      .toList();
 
   /// The array of indices for vector start in Columns/Values
   List<int> get pointerBegin => _pointerBegin.asTypedList(height).toList();
@@ -60,21 +74,23 @@ class FloatMatrixDesc extends ffi.Struct {
     final ptrValues = values.toPointerFloat();
     final ptrPointerB = pointerBegin.toPointerInt32();
     final ptrPointerE = pointerEnd.toPointerInt32();
-    final struct = _createStructFn(height, width, ptrColumns, ptrValues, ptrPointerB, ptrPointerE);
+    final struct = _createStructFn(
+        height, width, ptrColumns, ptrValues, ptrPointerB, ptrPointerE);
 
     return struct;
   }
 
   FloatVectorDesc getRowAt(int index) {
-    final func = Libraries.instance.neoML.lookupFunction<_NativeGetRow, _DartGetRow>(
+    final func =
+        Libraries.instance.neoML.lookupFunction<_NativeGetRow, _DartGetRow>(
       _CFloatMatrixDesc.getRow,
     );
 
     return func(this, index);
   }
 
-  static _DartConstructor get _createStructFn =>
-      Libraries.instance.neoML.lookupFunction<_NativeConstructor, _DartConstructor>(
+  static _DartConstructor get _createStructFn => Libraries.instance.neoML
+          .lookupFunction<_NativeConstructor, _DartConstructor>(
         _CFloatMatrixDesc.init,
       );
 
@@ -102,7 +118,8 @@ class FloatMatrixDesc extends ffi.Struct {
             other.height == height &&
             const DeepCollectionEquality().equals(other.values, other.values) &&
             const DeepCollectionEquality().equals(other.columns, columns) &&
-            const DeepCollectionEquality().equals(other.pointerBegin, pointerBegin) &&
+            const DeepCollectionEquality()
+                .equals(other.pointerBegin, pointerBegin) &&
             const DeepCollectionEquality().equals(other.pointerEnd, pointerEnd);
   }
 

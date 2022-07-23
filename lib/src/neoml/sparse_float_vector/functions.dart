@@ -1,13 +1,7 @@
 part of 'sparse_float_vector.dart';
 
-// This class provides name functions in C dynamic library for class `CFloatVectorDesc`
-class _CFloatVectorDescFunctinos {
-  static const init = 'CFloatVectorDescInit';
-
-  const _CFloatVectorDescFunctinos._();
-}
-
-class _CSparseFloatVectorFunctinos {
+// This class provides name functions in C dynamic library for class `CSparseFloatVector`
+class _CSparseFloatVectorFunctions {
   // --- Constructors --- //
 
   static const initEmpty = 'CSparseFloatVectorInitEmpty';
@@ -19,8 +13,6 @@ class _CSparseFloatVectorFunctinos {
   // --- Constructors --- //
 
   // --- Functions --- //
-
-  static const copyOnWrite = 'CSparseFloatVectorCopyOnWrite';
 
   static const getDesc = 'CSparseFloatVectorGetDesc';
 
@@ -58,5 +50,5 @@ class _CSparseFloatVectorFunctinos {
 
   // --- Operations --- //
 
-  const _CSparseFloatVectorFunctinos._();
+  const _CSparseFloatVectorFunctions._();
 }

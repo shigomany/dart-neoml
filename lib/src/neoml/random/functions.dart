@@ -4,8 +4,6 @@ part of 'random.dart';
 class _CRandomFunctinos {
   static const init = 'CRandomInit';
 
-  static const initEmpty = 'CRandomInitEmpty';
-
   static const reset = 'CRandomReset';
 
   static const next = 'CRandomNext';

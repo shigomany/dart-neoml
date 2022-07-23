@@ -3,6 +3,7 @@
 .packages
 pubspec.lock
 .vscode/
+.mason/
 doc/**
 
 # Conventional directory for build output.

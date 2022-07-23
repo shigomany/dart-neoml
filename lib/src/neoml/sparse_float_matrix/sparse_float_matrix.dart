@@ -7,6 +7,7 @@ import 'package:ffi/ffi.dart';
 
 import '../../functions/functions.dart';
 import '../../libraries/libraries.dart';
+import '../float_vector_desc/float_vector_desc.dart';
 
 part 'functions.dart';
 part 'native.dart';

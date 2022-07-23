@@ -1,5 +1,5 @@
+import 'package:dart_neoml/src/neoml/float_vector_desc/float_vector_desc.dart';
 import 'package:dart_neoml/src/neoml/sparse_float_matrix/sparse_float_matrix.dart';
-import 'package:dart_neoml/src/neoml/sparse_float_vector/sparse_float_vector.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -27,7 +27,8 @@ void main() {
     test('Get row', () {
       for (var i = 0; i < source.length; i++) {
         final actual = testSparseDesc.getRowAt(i);
-        final matcher = FloatVectorDesc.fromVector(source[i].map((e) => e.toDouble()).toList());
+        final matcher = FloatVectorDesc.fromVector(
+            source[i].map((e) => e.toDouble()).toList());
         expect(actual, matcher);
       }
     });
