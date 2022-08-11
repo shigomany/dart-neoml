@@ -23,6 +23,7 @@ analyzer:
   exclude:
     - bricks/**/*.dart
     - vcpkg/**/*.dart
+    - neoml/**/*.dart
 
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints
