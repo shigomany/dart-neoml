@@ -13,7 +13,8 @@ class BuildLibrary extends StepDefinitionExecutor {
       )!;
 
   Future<void> _desktopStep() async {
-    final selectedConfiguration = _selectConfiguration();
+    // final selectedConfiguration = _selectConfiguration();
+    final selectedConfiguration = 'Debug';
     // Execute command
     await executeCommand(
       command:

@@ -64,7 +64,6 @@ class CMakeConfigure extends StepDefinitionExecutor {
   String _selectArchitecture({
     required List<String> archs,
   }) {
-    // final archs = ['x64', 'Win32'];
     final archSelect = Select(
       prompt: message('Architecture:'),
       options: archs,
@@ -109,7 +108,7 @@ class CMakeConfigure extends StepDefinitionExecutor {
       resultCommand.write(' -DCMAKE_TOOLCHAIN_FILE="$toolchainFile"');
     }
 
-    resultCommand.write(' -DCMAKE_INSTALL_PREFIX="../../$installPath"');
+    resultCommand.write(' -DCMAKE_INSTALL_PREFIX=../../$installPath');
 
     return resultCommand.toString();
   }
