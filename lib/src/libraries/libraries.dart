@@ -5,13 +5,13 @@ import 'dart:ffi' as ffi;
 import 'package:path/path.dart' as path;
 
 class Libraries {
-  Libraries() {
+  Libraries._() {
     // Don't change the order, as one library depends on another
     neoMathEngine = _openByName(_neoMathEngineFile);
     neoML = _openByName(_neoMLFile);
   }
 
-  static final Libraries instance = Libraries();
+  static final Libraries instance = Libraries._();
 
   late final ffi.DynamicLibrary neoML;
   late final ffi.DynamicLibrary neoMathEngine;

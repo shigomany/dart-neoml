@@ -26,9 +26,11 @@ class Random {
 
   /// {@macro neoml.Random.constructor}
   /// DateTime.now().microsecondsSinceEpoch
-  Random.timebased() : _instance = _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
+  Random.timebased()
+      : _instance =
+            _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
 
-  static ffi.Pointer<ffi.Void> _initSeed(int seed) {
+  static Instance _initSeed(int seed) {
     final constructor = Libraries.instance.neoML
         .lookupFunction<ConstructorFFI1<ffi.UnsignedInt>, Constructor1<int>>(
       _CRandomFunctinos.init,
