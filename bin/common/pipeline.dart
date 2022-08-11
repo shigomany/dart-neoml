@@ -1,3 +1,5 @@
+import 'package:ansi_styles/extension.dart';
+
 import 'step_definition/step_definition.dart';
 
 /// {@macro common.pipeline.Pipeline}
@@ -16,7 +18,8 @@ class Pipeline {
     for (final stepDef in steps) {
       try {
         await stepDef.step();
-      } on Object {
+      } on Object catch (e) {
+        print(e.toString().bold.red);
         break;
       }
     }

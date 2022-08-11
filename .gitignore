@@ -22,3 +22,4 @@ assets/
 # Compiled Dynamic libraries
 *.o
 *.lib
+vcpkg/*vcpkg*

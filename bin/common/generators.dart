@@ -7,8 +7,8 @@ final RegExp _fixNewLines = RegExp(r'[\n]{1,}[\=]{1,}', multiLine: true);
 /// Returns a list of project generators from the CMake console output
 List<ProjectGenerator> getGenerators() {
   final cmakeResult = Process.runSync(
-    'cmake --help',
-    [],
+    'cmake',
+    ['--help'],
     runInShell: true,
   );
 

@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'common/pipeline.dart';
 import 'steps/steps.dart';
 
 Future<void> main() => Pipeline(
       steps: [
-        VcpkgBuilder(),
         CheckDepndencies(),
+        if (Platform.isWindows) VcpkgBuilder(),
         CMakeConfigure(),
         BuildLibrary(),
         CleanUp(),

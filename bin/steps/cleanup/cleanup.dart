@@ -7,16 +7,20 @@ class CleanUp extends StepDefinitionExecutor {
   @override
   Future<void> step() => platform.when<Future<void>>(
         windows: () => executeFunction(
-          method: _winStep,
+          method: () => _desktopStep(cleanPath: 'assets/windows'),
+          rightPrompt: (done) =>
+              done ? message('Cleanup succeed') : message('Cleanup pending'),
+        ),
+        macOS: () => executeFunction(
+          method: () => _desktopStep(cleanPath: 'assets/macos'),
           rightPrompt: (done) =>
               done ? message('Cleanup succeed') : message('Cleanup pending'),
         ),
         orElse: () => throw UnsupportedError('Unsupported platform'),
       )!;
 
-  Future<void> _winStep() async {
-    final libDir =
-        Directory(path.join(Directory.current.path, 'assets/windows'));
+  Future<void> _desktopStep({required String cleanPath}) async {
+    final libDir = Directory(path.join(Directory.current.path, cleanPath));
     final nestedDirFiles = libDir.listSync().whereType<Directory>().toList();
 
     final binDirectoryIndex =
@@ -28,10 +32,6 @@ class CleanUp extends StepDefinitionExecutor {
         await dir.delete(recursive: true);
       }
     }
-  }
-
-  void _macOsStep() {
-    final resultCommand = StringBuffer('cmake');
   }
 
   void copyDirectory(Directory source, Directory destination) =>
