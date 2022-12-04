@@ -32,10 +32,10 @@ abstract class StepDefinitionChecker extends StepDefinition {
             ? message('${executable.bold} utility founded.')
             : message('${executable.bold} utility founding.'),
       ).interact();
-
+      final commandSplitted = command.split(' ');
       final executableResult = await Process.run(
-        command,
-        [],
+        commandSplitted.first,
+        commandSplitted.sublist(1),
         runInShell: runInShell,
         workingDirectory: workingDirectory,
       );

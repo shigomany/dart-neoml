@@ -14,7 +14,7 @@ part 'functions.dart';
 /// {@endtemplate}
 /// {@category neoml}
 class Random {
-  final Instance _instance;
+  late final Instance _instance;
 
   /// {@template neoml.Random.constructor}
   /// Creates Random instance with start [seed] =
@@ -22,13 +22,20 @@ class Random {
   /// `195948557`
   Random({
     int seed = 195948557,
-  }) : _instance = _initSeed(seed);
+  }) {
+    if (seed < 0) {
+      throw ArgumentError('seed must be >= 0');
+    }
+    _instance = _initSeed(seed);
+  }
 
   /// {@macro neoml.Random.constructor}
   /// DateTime.now().microsecondsSinceEpoch
-  Random.timebased() : _instance = _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
+  Random.timebased()
+      : _instance =
+            _initSeed(DateTime.now().microsecondsSinceEpoch % 195948557);
 
-  static ffi.Pointer<ffi.Void> _initSeed(int seed) {
+  static Instance _initSeed(int seed) {
     final constructor = Libraries.instance.neoML
         .lookupFunction<ConstructorFFI1<ffi.UnsignedInt>, Constructor1<int>>(
       _CRandomFunctinos.init,

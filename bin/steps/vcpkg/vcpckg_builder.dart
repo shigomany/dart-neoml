@@ -42,8 +42,8 @@ class VcpkgBuilder extends StepDefinitionExecutor {
 
   bool _isInstalledProtobuf() {
     final protobufResult = Process.runSync(
-      'vcpkg list',
-      [],
+      'vcpkg',
+      ['list'],
       workingDirectory: 'vcpkg',
       runInShell: true,
     );
@@ -55,7 +55,7 @@ class VcpkgBuilder extends StepDefinitionExecutor {
     final pathFile = platform.when(
       windows: () => 'vcpkg/vcpkg.exe',
       linux: () => 'vcpkg/vcpkg',
-      macOS: () => 'vcpkg/vcpkg.dmg',
+      orElse: () => throw UnsupportedError('Unsupported platform'),
     )!;
     final vcpkgFile = File(pathFile);
 

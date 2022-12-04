@@ -9,6 +9,7 @@ class CMakeConfigure extends StepDefinitionExecutor {
   @override
   Future<void> step() => platform.when<Future<void>>(
         windows: _winStep,
+        macOS: _macOsStep,
         orElse: () => throw UnsupportedError('Unsupported platform'),
       )!;
 
@@ -22,7 +23,7 @@ class CMakeConfigure extends StepDefinitionExecutor {
   Future<void> _winStep() async {
     // Select nessary fields
     final selectedGenerator = _selectProjectGenerator();
-    final selectedArch = _selectArchitecture();
+    final selectedArch = _selectArchitecture(archs: ['x64', 'Win32']);
 
     final command = _cmakeConfigureCommand(
       arch: selectedArch,
@@ -34,7 +35,8 @@ class CMakeConfigure extends StepDefinitionExecutor {
     // Execute command
     await executeCommand(
       command: command,
-      rightPrompt: (done) => done ? message('Project configured') : message('Configuring project'),
+      rightPrompt: (done) =>
+          done ? message('Project configured') : message('Configuring project'),
       workingDirectory: 'neoml/Build',
     );
   }
@@ -49,16 +51,19 @@ class CMakeConfigure extends StepDefinitionExecutor {
     final projectGeneratorsSelectors = Select(
       prompt: message('Project generator:'),
       options: filteredGenerators.map((e) => e.shortNameIDE).toList(),
-      initialIndex: filteredGenerators.indexWhere((element) => element.isSelected),
+      initialIndex:
+          filteredGenerators.indexWhere((element) => element.isSelected),
     );
 
-    final selectedGenerator = filteredGenerators[projectGeneratorsSelectors.interact()];
+    final selectedGenerator =
+        filteredGenerators[projectGeneratorsSelectors.interact()];
 
     return selectedGenerator;
   }
 
-  String _selectArchitecture() {
-    final archs = ['x64', 'Win32'];
+  String _selectArchitecture({
+    required List<String> archs,
+  }) {
     final archSelect = Select(
       prompt: message('Architecture:'),
       options: archs,
@@ -103,13 +108,23 @@ class CMakeConfigure extends StepDefinitionExecutor {
       resultCommand.write(' -DCMAKE_TOOLCHAIN_FILE="$toolchainFile"');
     }
 
-    resultCommand.write(' -DCMAKE_INSTALL_PREFIX="../../$installPath"');
+    resultCommand.write(' -DCMAKE_INSTALL_PREFIX=../../$installPath');
 
     return resultCommand.toString();
   }
 
-  String _macOsStep() {
-    final resultCommand = StringBuffer('cmake');
-    return resultCommand.toString();
+  Future<void> _macOsStep() async {
+    final command = _cmakeConfigureCommand(
+      installPath: _assetPath,
+      generator: 'Ninja',
+    );
+
+    // Execute command
+    await executeCommand(
+      command: command,
+      rightPrompt: (done) =>
+          done ? message('Project configured') : message('Configuring project'),
+      workingDirectory: 'neoml/Build',
+    );
   }
 }

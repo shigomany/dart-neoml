@@ -6,11 +6,13 @@ class BuildLibrary extends StepDefinitionExecutor {
 
   @override
   Future<void> step() => platform.when<Future<void>>(
-        windows: _winStep,
+        windows: _desktopStep,
+        linux: _desktopStep,
+        macOS: _desktopStep,
         orElse: () => throw UnsupportedError('Unsupported platform'),
       )!;
 
-  Future<void> _winStep() async {
+  Future<void> _desktopStep() async {
     final selectedConfiguration = _selectConfiguration();
     // Execute command
     await executeCommand(
@@ -34,10 +36,5 @@ class BuildLibrary extends StepDefinitionExecutor {
     final selectedConfig = configurations[configSelect.interact()];
 
     return selectedConfig;
-  }
-
-  String _macOsStep() {
-    final resultCommand = StringBuffer('cmake');
-    return resultCommand.toString();
   }
 }

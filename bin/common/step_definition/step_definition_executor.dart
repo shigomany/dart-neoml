@@ -32,9 +32,10 @@ abstract class StepDefinitionExecutor extends StepDefinition {
         leftPrompt: (done) => '',
         rightPrompt: rightPrompt,
       ).interact();
+      final commandSplitted = command.split(' ');
       final executorCommand = await Process.run(
-        command,
-        [],
+        commandSplitted.first,
+        commandSplitted.sublist(1),
         workingDirectory: workingDirectory,
         runInShell: runInShell,
       );
