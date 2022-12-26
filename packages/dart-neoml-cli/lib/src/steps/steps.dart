@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ansi_styles/extension.dart';
+import 'package:dart_neoml_cli/src/common/utils.dart';
 import 'package:interact/interact.dart';
 import 'package:platform_info/platform_info.dart';
 

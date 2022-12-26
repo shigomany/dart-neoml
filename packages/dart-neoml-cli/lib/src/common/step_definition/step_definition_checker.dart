@@ -1,15 +1,19 @@
 part of 'step_definition.dart';
 
 abstract class StepDefinitionChecker extends StepDefinition {
+  bool get verbose;
+
   /// Printing beautiful error message
   void errorPrint({
     required String title,
-    required String content,
+    String? content,
   }) {
     print('');
     print(title.bgRed);
-    print('');
-    print(content.red);
+    if (content != null) {
+      print('');
+      print(content.red);
+    }
   }
 
   void printErrorCode(int errorCode) {
@@ -58,7 +62,7 @@ abstract class StepDefinitionChecker extends StepDefinition {
       reset();
       errorPrint(
         title: e.toString(),
-        content: e.processResult.stderr as String,
+        content: verbose ? e.processResult.stderr as String : null,
       );
       if (supportInformation != null) {
         print(supportInformation.cyanBright);
@@ -69,7 +73,7 @@ abstract class StepDefinitionChecker extends StepDefinition {
       reset();
       errorPrint(
         title: e.toString(),
-        content: e.processResult.stderr as String,
+        content: verbose ? e.processResult.stderr as String : null,
       );
       printErrorCode(e.processResult.exitCode);
       exit(e.processResult.exitCode);

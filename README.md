@@ -4,10 +4,15 @@ Dart NeoML is a port of the cross-platform library [NeoML](https://github.com/ne
 
 
 ## <a id='index'>Index</a>
-- [Index](#index)
-- [About](#about)
-- [Motivation](#motivation)
-  - [Why was NeoML chosen?](#choose-strategy)
+- [Dart NeoML](#dart-neoml)
+  - [Index](#index)
+  - [About](#about)
+  - [Motivation](#motivation)
+    - [Why was NeoML chosen?](#why-was-neoml-chosen)
+  - [Features](#features)
+  - [Getting started](#getting-started)
+  - [Usage](#usage)
+  - [Contribution](#contribution)
 
 ## <a id='about'>About</a>
 
@@ -43,8 +48,22 @@ to `/example` folder.
 const like = 'sample';
 ```
 
-## Additional information
+## Contribution
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Create PR or offers in Issues. Become a part of the `OpenSource` community 😊
+
+But before you start, you need to deploy the project locally.
+
+To do this, you need to follow a number of steps:
+
+1. Clone project with submodules:
+
+```bash
+git clone --recurse-submodules -j8 https://github.com/shigomany/dart-neoml.git
+```
+
+2. If you have already cloned the repository, you must run this command to clone the submodules.
+   
+```bash
+git submodule update --init --recursive
+```

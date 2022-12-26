@@ -2,6 +2,9 @@ part of '../steps.dart';
 
 class CleanUp extends StepDefinitionExecutor {
   @override
+  bool get verbose => false;
+
+  @override
   String get module => 'CleanUp';
 
   @override
