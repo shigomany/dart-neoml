@@ -7,11 +7,8 @@ import '../../libraries/libraries.dart';
 
 part 'functions.dart';
 
-typedef _BufferType = ffi.Array<ffi.Int32>;
-
 enum _Direction {
-  read._(1),
-  write._(2);
+  read._(1);
 
   const _Direction._(this.value);
 
@@ -51,8 +48,9 @@ class ArchiveFile {
     // final array = ffi.Array<ffi.Int16>(length);
     final outBuffer2 = ffi.calloc<ffi.Int8>(length * 1);
     final function = Libraries.instance.neoML.lookupFunction<
-        NativeClassCallbackFn2<ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32>,
-        ClassCallbackFn2<ffi.Pointer<ffi.Int8>, int, int>>(_CArchiveFileFunctinos.read);
+            NativeClassCallbackFn2<ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32>,
+            ClassCallbackFn2<ffi.Pointer<ffi.Int8>, int, int>>(
+        _CArchiveFileFunctinos.read);
 
     final readedBytes = function(instance, outBuffer2, length * 1);
     close(instance);
@@ -62,9 +60,9 @@ class ArchiveFile {
   }
 
   void close(ffi.Pointer<ffi.Void> handle) {
-    final closeHandle = Libraries.instance.neoML
-        .lookupFunction<NativeClassCallbackFn0<ffi.Void>, ClassCallbackFn0<void>>(
-            _CArchiveFileFunctinos.close);
+    final closeHandle = Libraries.instance.neoML.lookupFunction<
+        NativeClassCallbackFn0<ffi.Void>,
+        ClassCallbackFn0<void>>(_CArchiveFileFunctinos.close);
     closeHandle(handle);
   }
   // Libraries.instance.neoML.lookupFunction<NativeClassCallbackFn2<ffi.Double, ffi.Double, ffi.Double>,
