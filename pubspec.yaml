@@ -6,19 +6,19 @@ maintainer: Alexey Tropin (@shigomany)
 homepage: https://github.com/shigomany/dart-neoml
 
 environment:
-  sdk: '>=2.17.1 <3.0.0'
+  sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
-  ffi: ^1.2.1
-  meta: ^1.8.0
-  path: ^1.8.0
+  ffi: ^2.0.1
+  meta: ^1.9.1
+  path: ^1.8.3
   platform_info: ^3.2.0
-  interact: ^2.1.1
+  interact: ^2.2.0
   ansi_styles: ^0.3.2+1
-  collection: ^1.16.0
+  collection: ^1.17.1
 
 dev_dependencies:
-  lints: ^2.0.0
-  test: ^1.16.0
+  lints: ^2.0.1
+  test: ^1.24.0
 
 
