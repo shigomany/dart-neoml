@@ -1,6 +1,13 @@
 part of '../steps.dart';
 
 class BuildLibrary extends StepDefinitionExecutor {
+  BuildLibrary({required bool verbose}) : _verbose = verbose;
+
+  final bool _verbose;
+
+  @override
+  bool get verbose => _verbose;
+
   @override
   String get module => 'CMake';
 

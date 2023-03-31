@@ -1,6 +1,20 @@
 part of '../steps.dart';
 
 class VcpkgBuilder extends StepDefinitionExecutor {
+  VcpkgBuilder({
+    required bool verbose,
+    String? vcpkgPath,
+  })  : _verbose = verbose,
+        _vcpkgPath = vcpkgPath;
+
+  final bool _verbose;
+  final String? _vcpkgPath;
+
+  String get directoryPath => (_vcpkgPath ?? Directory.current.path).toUnixPath;
+
+  @override
+  bool get verbose => _verbose;
+
   @override
   String get module => 'Vcpkg';
 
@@ -17,7 +31,8 @@ class VcpkgBuilder extends StepDefinitionExecutor {
         rightPrompt: (done) => done
             ? message('${'vcpkg'.bold} builded')
             : message('${'vcpkg'.bold} installing'),
-        workingDirectory: 'vcpkg',
+        workingDirectory: directoryPath,
+        runInShell: true,
       );
     }
     if (!_isInstalledProtobuf()) {
@@ -26,7 +41,7 @@ class VcpkgBuilder extends StepDefinitionExecutor {
         rightPrompt: (done) => done
             ? message('${'protobuf'.bold} installed')
             : message('${'protobuf'.bold} installing'),
-        workingDirectory: 'vcpkg',
+        workingDirectory: directoryPath,
         runInShell: true,
       );
     }
@@ -35,7 +50,7 @@ class VcpkgBuilder extends StepDefinitionExecutor {
       rightPrompt: (done) => done
           ? message('${'vcpkg'.bold} integration installed')
           : message('${'vcpkg'.bold} integration installing'),
-      workingDirectory: 'vcpkg',
+      workingDirectory: directoryPath,
       runInShell: true,
     );
   }
@@ -44,7 +59,7 @@ class VcpkgBuilder extends StepDefinitionExecutor {
     final protobufResult = Process.runSync(
       'vcpkg',
       ['list'],
-      workingDirectory: 'vcpkg',
+      workingDirectory: directoryPath,
       runInShell: true,
     );
 
@@ -52,12 +67,12 @@ class VcpkgBuilder extends StepDefinitionExecutor {
   }
 
   bool _isExistVcpkg() {
-    final pathFile = platform.when(
-      windows: () => 'vcpkg/vcpkg.exe',
-      linux: () => 'vcpkg/vcpkg',
+    final executableFile = platform.when(
+      windows: () => 'vcpkg.exe',
+      linux: () => 'vcpkg',
       orElse: () => throw UnsupportedError('Unsupported platform'),
     )!;
-    final vcpkgFile = File(pathFile);
+    final vcpkgFile = File('$directoryPath/$executableFile');
 
     return vcpkgFile.existsSync();
   }

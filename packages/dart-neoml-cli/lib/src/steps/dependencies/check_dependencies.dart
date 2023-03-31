@@ -1,6 +1,15 @@
 part of '../steps.dart';
 
 class CheckDepndencies extends StepDefinitionChecker {
+  CheckDepndencies({
+    required bool verbose,
+  }) : _verbose = verbose;
+
+  final bool _verbose;
+
+  @override
+  bool get verbose => _verbose;
+
   @override
   String get module => 'Dependencies';
 
@@ -74,8 +83,8 @@ class CheckDepndencies extends StepDefinitionChecker {
   String _mingwInformation() {
     return platform.when<String>(
       windows: () =>
-          'Install MinGW for Windows x64: https://sourceforge.net/projects/mingw-w64/\n'
-          'And set MinGW path to global variables.',
+          'Install MinGW for Windows x64: https://sourceforge.net/projects/mingw/\n'
+          'And set G++ and GCC compilers (The GNU C++ Compiler) with MinGW Base',
       macOS: () => _brewCommandInfo('brew install gcc'),
       linux: () =>
           'Use this commands:\nsudo apt -y install build-essential\nwhereis gcc make',

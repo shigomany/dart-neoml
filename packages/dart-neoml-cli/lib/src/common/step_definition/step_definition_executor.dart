@@ -1,15 +1,20 @@
 part of 'step_definition.dart';
 
 abstract class StepDefinitionExecutor extends StepDefinition {
+  /// Show additional information in output
+  bool get verbose;
+
   /// Printing beautiful error message
   void errorPrint({
     required String title,
-    required String content,
+    String? content,
   }) {
     print('');
     print(title.bgRed);
-    print('');
-    print(content.red);
+    if (content != null) {
+      print('');
+      print(content.red);
+    }
   }
 
   Future<void> executeCommand({
@@ -33,11 +38,14 @@ abstract class StepDefinitionExecutor extends StepDefinition {
         rightPrompt: rightPrompt,
       ).interact();
       final commandSplitted = command.split(' ');
+      // C:\workingprojects\dart-neoml\vcpkg\bootstrap-vcpkg.bat
       final executorCommand = await Process.run(
         commandSplitted.first,
         commandSplitted.sublist(1),
         workingDirectory: workingDirectory,
         runInShell: runInShell,
+        stderrEncoding: Utf8Codec(),
+        stdoutEncoding: Utf8Codec(),
       );
       if (executorCommand.exitCode != 0) {
         throw CommandExecute(
@@ -49,14 +57,14 @@ abstract class StepDefinitionExecutor extends StepDefinition {
       reset();
       errorPrint(
         title: e.toString(),
-        content: e.processResult.stderr as String,
+        content: verbose ? e.processResult.stderr as String : null,
       );
       exit(e.processResult.exitCode);
     } on Object catch (e, s) {
       reset();
       errorPrint(
         title: e.toString(),
-        content: s.toString(),
+        content: verbose ? s.toString() : null,
       );
       exit(exitCode);
     }

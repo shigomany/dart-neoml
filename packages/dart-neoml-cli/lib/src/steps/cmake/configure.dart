@@ -3,6 +3,27 @@ part of '../steps.dart';
 final RegExp _visualStudioVersion = RegExp(r'^Visual Studio (\d{1,})');
 
 class CMakeConfigure extends StepDefinitionExecutor {
+  CMakeConfigure({
+    required bool verbose,
+    String? neomlPath,
+    String? vcpkgPath,
+  })  : _verbose = verbose,
+        _neomlPath = neomlPath,
+        _vcpkgPath = vcpkgPath;
+
+  final bool _verbose;
+  final String? _neomlPath;
+  final String? _vcpkgPath;
+
+  String get vcpkgPath =>
+      (_vcpkgPath ?? '${Directory.current.path}/vcpkg').toUnixPath;
+
+  String get neomlPath =>
+      (_neomlPath ?? '${Directory.current.path}/neoml').toUnixPath;
+
+  @override
+  bool get verbose => _verbose;
+
   @override
   String get module => 'CMake';
 
@@ -29,7 +50,7 @@ class CMakeConfigure extends StepDefinitionExecutor {
       arch: selectedArch,
       installPath: _assetPath,
       generator: selectedGenerator.shortNameIDE,
-      toolchainFile: '../../vcpkg/scripts/buildsystems/vcpkg.cmake',
+      toolchainFile: '$vcpkgPath/scripts/buildsystems/vcpkg.cmake',
     );
 
     // Execute command
@@ -37,7 +58,7 @@ class CMakeConfigure extends StepDefinitionExecutor {
       command: command,
       rightPrompt: (done) =>
           done ? message('Project configured') : message('Configuring project'),
-      workingDirectory: 'neoml/Build',
+      workingDirectory: '$neomlPath/Build',
     );
   }
 
